@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cassert>
 #include "leveldb/db.h"
-
+//it is supposed to be some comments
 int main(int intargc, char * argv[])
 {
     leveldb::DB *db;
