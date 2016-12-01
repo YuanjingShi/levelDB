@@ -20,9 +20,10 @@ int main(int intargc, char * argv[])
     assert (status.ok ());
     std::string key = "test";
     std::string val = "test_value";
+    leveldb::Status s;
     s = db->Put (leveldb::WriteOptions (), key, val);
     val.clear ();
     s = db->Get (leveldb::ReadOptions (), key, &val);
-    
+
     std::cout << key << ": " << val << std::endl;
 }
