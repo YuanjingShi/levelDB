@@ -1,0 +1,45 @@
+LevelDB:    version 1.19
+Keys:       16 bytes each
+Values:     100 bytes each (50 bytes after compression)
+Entries:    1000000
+RawSize:    110.6 MB (estimated)
+FileSize:   62.9 MB (estimated)
+//We use a database with a million entries. Each entry has a 16 byte key, and a
+//100 byte value. Values used by the benchmark compress to about half their original size.
+
+WARNING: Optimization is disabled: benchmarks unnecessarily slow
+WARNING: Assertions are enabled; benchmarks unnecessarily slow
+------------------------------------------------
+//The "fill" benchmarks create a brand new database, in either sequential, or
+//random order. The "fillsync" benchmark flushes data from the operating system
+//to the disk after every operation; the other write operations leave the data
+//sitting in the operating system buffer cache for a while. The "overwrite"
+//benchmark does random writes that update existing keys in the database.
+------------------------------------------------
+fillseq      :       6.487 micros/op;   17.1 MB/s
+fillsync     :      77.817 micros/op;    1.4 MB/s (1000 ops)
+fillrandom   :       8.810 micros/op;   12.6 MB/s
+overwrite    :      10.457 micros/op;   10.6 MB/s
+------------------------------------------------
+We list the performance of reading sequentially in both the forward and reverse
+direction, and also the performance of a random lookup. Note that the database
+created by the benchmark is quite small. Therefore the report characterizes the
+performance of leveldb when the working set fits in memory. The cost of reading
+a piece of data that is not present in the operating system buffer cache will
+be dominated by the one or two disk seeks needed to fetch the data from disk.
+Write performance will be mostly unaffected by whether or not the working set
+fits in memory.
+------------------------------------------------
+readrandom   :      15.950 micros/op; (1000000 of 1000000 found)
+readrandom   :      15.587 micros/op; (1000000 of 1000000 found)
+readseq      :       0.926 micros/op;  119.5 MB/s
+readreverse  :       1.619 micros/op;   68.3 MB/s
+compact      : 1460711.000 micros/op;
+readrandom   :       9.802 micros/op; (1000000 of 1000000 found)
+readseq      :       0.909 micros/op;  121.8 MB/s
+readreverse  :       1.314 micros/op;   84.2 MB/s
+fill100K     :    1327.585 micros/op;   71.8 MB/s (1000 ops)
+crc32c       :      12.823 micros/op;  304.6 MB/s (4K per op)
+snappycomp   :       7.039 micros/op;  555.0 MB/s (output: 55.1%)
+snappyuncomp :       0.944 micros/op; 4138.4 MB/s
+acquireload  :      22.905 micros/op; (each op is 1000 loads)
