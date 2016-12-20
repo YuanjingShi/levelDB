@@ -4,8 +4,11 @@ Values:     100 bytes each (50 bytes after compression)
 Entries:    1000000
 RawSize:    110.6 MB (estimated)
 FileSize:   62.9 MB (estimated)
-//We use a database with a million entries. Each entry has a 16 byte key, and a
-//100 byte value. Values used by the benchmark compress to about half their original size.
+
+//Level DB_bench use a database with a million entries. Each entry has a 16 byte key, 
+//and a 100 byte value. 
+
+//Values used by the benchmark compress to about half their original size.
 
 WARNING: Optimization is disabled: benchmarks unnecessarily slow
 WARNING: Assertions are enabled; benchmarks unnecessarily slow
@@ -17,9 +20,20 @@ WARNING: Assertions are enabled; benchmarks unnecessarily slow
 //benchmark does random writes that update existing keys in the database.
 ------------------------------------------------
 fillseq      :       6.487 micros/op;   17.1 MB/s
+------------------------------------------------
+//-- write N values in sequential key order in async mode
+------------------------------------------------
 fillsync     :      77.817 micros/op;    1.4 MB/s (1000 ops)
+------------------------------------------------
+-- write N/100 values in random key order in sync mode
+------------------------------------------------
 fillrandom   :       8.810 micros/op;   12.6 MB/s
+------------------------------------------------
+-— write N values in random key order in async mode
+------------------------------------------------
 overwrite    :      10.457 micros/op;   10.6 MB/s
+------------------------------------------------
+-- overwrite N values in random key order in async mode
 ------------------------------------------------
 We list the performance of reading sequentially in both the forward and reverse
 direction, and also the performance of a random lookup. Note that the database
