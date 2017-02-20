@@ -1,0 +1,16 @@
+After the 1st group meeting:
+	1. Max capacity of each level ???
+	2. When to Compact ???
+	3. How to Pick Compaction
+	4. What does N and n means in bLSM tree structure?
+
+After 20th Feb, 2015
+	1. Max capacity is confirmed at 10^n MB at each level
+	2. When to Compact:
+		a. Major Compaction: When level n gets too many SSTs
+		b. MemTable is full
+		c. one SST runs out of Allow_Seeks(file size/16KB, equivalent to one seek)
+	3. How to pick which SSTs should be Compact ???
+	4. What does N and n means in bLSM ???
+
+	Readings: bLSM, LSM tier and its references
